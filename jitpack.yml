@@ -1,5 +1,5 @@
-#jdk:
-#  - openjdk21
-#before install:
-#  - sdk install java 21.0.3-zulu
-#  - sdk use java 21.0.3-zulu
+jdk:
+  - openjdk21
+before install:
+  - sdk install java 21.0.3-zulu
+  - sdk use java 21.0.3-zulu
