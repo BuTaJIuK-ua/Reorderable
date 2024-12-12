@@ -87,31 +87,31 @@ android {
     }
 }
 
-mavenPublishing {
-    pom {
-        name = "Reorderable"
-        description = "A library for reordering items in a LazyColumn"
-        url = "https://github.com/Calvin-LL/Reorderable"
-        inceptionYear = "2023"
-
-        licenses {
-            license {
-                name = "The Apache Software License, Version 2.0"
-                url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
-                distribution = "http://www.apache.org/licenses/LICENSE-2.0.txt"
-            }
-        }
-        scm {
-            connection = "scm:git:git://github.com/Calvin-LL/Reorderable.git"
-            developerConnection = "scm:git:ssh://github.com/Calvin-LL/Reorderable.git"
-            url = "https://github.com/Calvin-LL/Reorderable"
-        }
-        developers {
-            developer {
-                name = "Calvin Liang"
-                email = "me@calvin.sh"
-                url = "https://calvin.sh"
-            }
-        }
-    }
-}
+//mavenPublishing {
+//    pom {
+//        name = "Reorderable"
+//        description = "A library for reordering items in a LazyColumn"
+//        url = "https://github.com/Calvin-LL/Reorderable"
+//        inceptionYear = "2023"
+//
+//        licenses {
+//            license {
+//                name = "The Apache Software License, Version 2.0"
+//                url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+//                distribution = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+//            }
+//        }
+//        scm {
+//            connection = "scm:git:git://github.com/Calvin-LL/Reorderable.git"
+//            developerConnection = "scm:git:ssh://github.com/Calvin-LL/Reorderable.git"
+//            url = "https://github.com/Calvin-LL/Reorderable"
+//        }
+//        developers {
+//            developer {
+//                name = "Calvin Liang"
+//                email = "me@calvin.sh"
+//                url = "https://calvin.sh"
+//            }
+//        }
+//    }
+//}
