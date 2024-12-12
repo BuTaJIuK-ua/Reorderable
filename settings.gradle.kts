@@ -13,5 +13,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Reorderable"
-include(":demoApp:composeApp")
+//include(":demoApp:composeApp")
 include(":reorderable")
