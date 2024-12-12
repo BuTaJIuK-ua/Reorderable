@@ -1,5 +1,6 @@
 package sh.calvin.reorderable.demo.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -23,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.customActions
@@ -37,16 +39,23 @@ import sh.calvin.reorderable.rememberReorderableLazyListState
 @Composable
 fun SimpleReorderableLazyColumnScreen() {
     val haptic = rememberReorderHapticFeedback()
+    var isCanDrop by remember { mutableStateOf(true) }
 
     var list by remember { mutableStateOf(items) }
     val lazyListState = rememberLazyListState()
-    val reorderableLazyColumnState = rememberReorderableLazyListState(lazyListState) { from, to ->
-        list = list.toMutableList().apply {
-            add(to.index, removeAt(from.index))
+    val reorderableLazyColumnState = rememberReorderableLazyListState(
+        lazyListState,
+        onCanMove = { fromIndex, toIndex ->
+            isCanDrop = toIndex % 2 != 0
+            return@rememberReorderableLazyListState isCanDrop
+        },
+        onMove = { from, to ->
+            list = list.toMutableList().apply {
+               add(to.index, removeAt(from.index))
+            }
+            haptic.performHapticFeedback(ReorderHapticFeedbackType.MOVE)
         }
-
-        haptic.performHapticFeedback(ReorderHapticFeedbackType.MOVE)
-    }
+    )
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -55,7 +64,7 @@ fun SimpleReorderableLazyColumnScreen() {
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         itemsIndexed(list, key = { _, item -> item.id }) { index, item ->
-            ReorderableItem(reorderableLazyColumnState, item.id) {
+            ReorderableItem(reorderableLazyColumnState, item.id) { isDragging ->
                 val interactionSource = remember { MutableInteractionSource() }
 
                 Card(
@@ -95,7 +104,11 @@ fun SimpleReorderableLazyColumnScreen() {
                     interactionSource = interactionSource,
                 ) {
                     Row(
-                        Modifier.fillMaxSize(),
+                        Modifier
+                            .fillMaxSize()
+                            .background(if (isDragging) {
+                                if (isCanDrop) Color.Transparent else Color.Red
+                            } else Color.Transparent),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {

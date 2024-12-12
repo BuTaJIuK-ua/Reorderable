@@ -259,6 +259,11 @@ open class ReorderableLazyCollectionState<out T> internal constructor(
     private val layoutDirection: LayoutDirection,
 
     /**
+     * Сallback that checks that we can move the element to a new position
+     */
+    private val onCanMove: (fromIndex: Int, toIndex: Int) -> Boolean = { _, _ -> true },
+
+    /**
      * Whether this is a LazyVerticalStaggeredGrid
      */
     private val lazyVerticalStaggeredGridRtlFix: Boolean = false,
@@ -478,7 +483,7 @@ open class ReorderableLazyCollectionState<out T> internal constructor(
             ) {
                 it.index != draggingItem.index
             }
-            if (targetItem != null) {
+            if (targetItem != null && onCanMove(draggingItem.index, targetItem.index)) {
                 scope.launch {
                     moveItems(draggingItem, targetItem)
                 }
@@ -528,7 +533,7 @@ open class ReorderableLazyCollectionState<out T> internal constructor(
             }
         }
         val job = scope.launch {
-            if (targetItem != null) {
+            if (targetItem != null && onCanMove(draggingItem.index, targetItem.index)) {
                 moveItems(draggingItem, targetItem)
             }
         }
